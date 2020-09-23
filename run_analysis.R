@@ -6,4 +6,7 @@ TestLabels<-import("Y_test.txt")
 Features<-import("features.txt")
 TrainData<-import("X_train.txt")
 TrainLabels<-import("y_train.txt")
-
+colnames(TestData)<-Features
+colnames(TrainData)<-Features
+Merged<-rbind(TestData,TrainData)
+dim(Merged)
