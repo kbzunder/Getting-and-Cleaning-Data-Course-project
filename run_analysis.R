@@ -22,9 +22,12 @@ Merged$Activ<-factor(Merged$Activity, levels=ActivityLabels$V1, labels=ActivityL
 std_mean<-grep("(std|mean)\\(\\)",names(Merged),value = TRUE)
 Selected_Merged<-select(Merged,std_mean)
 Selected_Merged
+ActiveNumber<-Merged$Activity
+names(Selected_Merged)
 ColNams<-colnames(Selected_Merged)
 ColNames_beautified<-gsub("[()]","",ColNams)
 colnames(Selected_Merged)<-ColNames_beautified
-Selected_Merged
-tidy_data<-summarise_all(Selected_Merged,mean)
-
+Selected_Merged<-mutate(Selected_Merged,Activity=Merged$Activ,ActivNumber=Merged$Activity)
+dcast(data = Selected_Merged,Activity+ActivNumber ~ variable,fun.aggregate = mean)
+dcast(data = Selected_Merged,formula = "Activity",fun.aggregate = mean)
+agregated <- reshape2::dcast(data = Selected_Merged, ActiveNumber + Activity ~ variable, fun.aggregate = mean)
