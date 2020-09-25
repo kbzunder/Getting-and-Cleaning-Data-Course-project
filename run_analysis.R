@@ -37,8 +37,10 @@ std_mean<-grep("(std|mean)\\(\\)",names(Merged),value = TRUE)
 Selected_Merged<-select(Merged,std_mean,SubjectNum,Activ)
 #making a vector of colnames for future renaming
 ColNams<-colnames(Selected_Merged)
-#making colnames of the dataframe more readable
+#making colnames of the data frame more readable
 ColNames_beautified<-gsub("[()]","",ColNams)
 colnames(Selected_Merged)<-ColNames_beautified
 #aggregating values in a data frame by number and activity
 aggregated<-aggregate(Selected_Merged,list(Selected_Merged$SubjectNum,Selected_Merged$Activ),mean)
+#writind a tidy data file:
+fwrite(x = aggregated, file = "tidyData.txt", quote = FALSE)
